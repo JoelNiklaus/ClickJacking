@@ -1,0 +1,29 @@
+{
+  "desktop": {
+    "Chrome": {
+      "xStart": 380,
+      "xEnd": 445,
+      "yStart": 45,
+      "yEnd": 75
+    },
+    "Firefox": {
+      "coordinates": "changing on resize"
+    },
+    "Opera": {
+      "coordinates": "changing on resize. always in center of screen horizontally"
+    },
+    "Safari": {
+      "coordinates": "changing on resize. always in center of screen horizontally"
+    }
+  },
+  "mobile": {
+    "Chrome": {
+    },
+    "Firefox": {
+    },
+    "Opera": {
+    },
+    "Safari": {
+    }
+  }
+}

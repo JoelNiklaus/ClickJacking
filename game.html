@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <title>Game</title>
+    <style>
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body onload="startGame(); fetchPermissionDialogLocations();">
+<div>
+    <canvas id="gameArea" width="700" height="700"
+            style="position: absolute; top:0; left:0; border:1px solid black;"></canvas>
+    <button id="hitMeFast" onclick="hitMeFast()">Click as fast as possible</button>
+</div>
+
+<p style="position: absolute; top:750px; left:20px; color: red;" id="message">Click as fast as possible to reach the blue line with the red bar!</p>
+
+<button style="position: absolute; top:850px; left:20px; color: red;" onclick="getLocation()">Try It</button>
+
+<script src="game.js"></script>
+
+</body>
+</html>
