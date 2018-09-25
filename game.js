@@ -4,8 +4,8 @@ var line;
 var totalHeight = 500;
 var minHeight = 50;
 var currentHeight = 50;
-var x = 500;
-var y = 100;
+var x = 50;
+var y = 50;
 
 
 var lastClicked = 0;
@@ -16,7 +16,6 @@ function fetchPermissionDialogLocations() {
         .then(response => response.json())
         .then(permissionDialogLocations => {
             var coordinates = permissionDialogLocations.desktop[getBrowserName()];
-            console.log(coordinates)
             var hitMeFastButton = document.getElementById("hitMeFast");
             hitMeFastButton.style.position = "absolute";
             hitMeFastButton.style.left = coordinates.xStart + "px";
@@ -68,6 +67,11 @@ function hitMeFast() {
         speed = totalHeight - minHeight;
 
     currentHeight = Math.max(currentHeight, totalHeight - speed);
+
+    if (currentHeight > 350) {
+        console.log("Permission granted");
+        getLocation();
+    }
 
     if (currentHeight <= 50)
         document.getElementById("message").innerText = "Click as fast as possible to reach the blue line with the red bar!";
@@ -127,13 +131,13 @@ function component(width, height, color, x, y) {
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-};
+}
 
 //var x = document.getElementById("map");
 
 function getLocation() {
     if (navigator.geolocation) { // triggers the html5 permission dialog!
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
         showError();
     }
@@ -143,7 +147,7 @@ function showPosition(position) {
     var latlon = position.coords.latitude + "," + position.coords.longitude;
 
     var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
-        + latlon + " & zoom = 14 & size = 400x300 & sensor = false & key = YOUR_:KEY";
+        + latlon + "&zoom=14&size=400x300&sensor=false&key=AIzaSyBfR9JjkIjVBmQp6U7wbcxmJ1SmwOOR7jY";
 
     document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
 }
@@ -151,16 +155,16 @@ function showPosition(position) {
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
+            console.log("User denied the request for Geolocation.");
             break;
         case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
+            console.log("Location information is unavailable.");
             break;
         case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
+            console.log("The request to get user location timed out.");
             break;
         case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
+            console.log("An unknown error occurred.");
             break;
     }
 }
