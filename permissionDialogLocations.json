@@ -7,7 +7,10 @@
 	  "yEnd": 75
 	},
 	"Firefox": {
-	  "coordinates": "changing on resize"
+	  "xStart": 440,
+	  "xEnd": 620,
+	  "yStart": 65,
+	  "yEnd": 105
 	},
 	"Opera": {
 	  "xStart": 245,
