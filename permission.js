@@ -10,6 +10,7 @@ function fetchPermissionDialogLocations() {
 		.then(response => response.json())
 		.then(permissionDialogLocations => {
 			var coordinates = permissionDialogLocations[getOSName()][getBrowserName()];
+			console.log(getOSName(), getBrowserName(), coordinates);
 			var hitMeFastButton = document.getElementById("hitMeFast");
 			hitMeFastButton.style.position = "absolute";
 			hitMeFastButton.style.left = coordinates.xStart + "px";

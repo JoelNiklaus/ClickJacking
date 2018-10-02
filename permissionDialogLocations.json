@@ -10,10 +10,13 @@
 	  "coordinates": "changing on resize"
 	},
 	"Opera": {
-	  "coordinates": "changing on resize. always in center of screen horizontally"
+	  "xStart": 245,
+	  "xEnd": 300,
+	  "yStart": 90,
+	  "yEnd": 105
 	},
 	"Safari": {
-	  "coordinates": "changing on resize. always in center of screen horizontally"
+	  "coordinates": "changing on resize. always in center of screen horizontally. Not possible to test on localhost because it is not served over https!"
 	}
   },
   "Windows": {
