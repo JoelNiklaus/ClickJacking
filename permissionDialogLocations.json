@@ -33,8 +33,6 @@
 	},
 	"Opera": {
 	},
-	"Safari": {
-	}
   },
   "iPhone": {
 	"Chrome": {
@@ -57,13 +55,26 @@
 	}
   },
   "Android": {
+	"Phone": "OnePlus5",
 	"Chrome": {
+	  "comment": "permission denied by user",
+	  "xStart": 300,
+	  "xEnd": 350,
+	  "yStart": 380,
+	  "yEnd": 430
 	},
 	"Firefox": {
+	  "comment": "permission denied by user",
+	  "xStart": 300,
+	  "xEnd": 350,
+	  "yStart": 380,
+	  "yEnd": 430
 	},
 	"Opera": {
-	},
-	"Safari": {
+	  "xStart": 320,
+	  "xEnd": 370,
+	  "yStart": 310,
+	  "yEnd": 340
 	}
   }
 }
