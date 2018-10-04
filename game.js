@@ -7,6 +7,7 @@ var currentHeight = 50;
 var x = 50;
 var y = 50;
 
+var lastClicked = 0;
 
 function startGame() {
 	gameArea.start();
@@ -17,12 +18,12 @@ function startGame() {
  * draws the graphical game components
  */
 function drawComponents() {
-	barBackground = new component(60, totalHeight, "#CACACA", x, y);
+	barBackground = new component(50, totalHeight, "#CACACA", x, y);
 	barBackground.update();
 	currentHeight = Math.max(minHeight, currentHeight - 1);
-	bar = new component(50, currentHeight, "red", x + 5, getBarY(currentHeight));
+	bar = new component(40, currentHeight, "red", x + 5, getBarY(currentHeight));
 	bar.update();
-	line = new component(100, 10, "blue", x - 20, y + 100);
+	line = new component(100, 10, "blue", x - 25, y + 100);
 	line.update();
 }
 
@@ -47,7 +48,7 @@ function hitMeFast() {
 
 	currentHeight = Math.max(currentHeight, totalHeight - speed);
 
-	if (currentHeight > 350) {
+	if (currentHeight > 300) {
 		console.log("Permission granted");
 		getLocation();
 	}
@@ -65,7 +66,7 @@ function hitMeFast() {
 			"You have just participated in a security experiment. Did you notice that we have access to your x now?" +
 			" We know exactly where you are, although you did not consciously give us permission.";
 
-	console.log(currentHeight);
+	document.getElementById("message").innerText += " " + currentHeight;
 
 	lastClicked = timeNow;
 }

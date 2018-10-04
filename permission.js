@@ -1,4 +1,3 @@
-var lastClicked = 0;
 
 /**
  * Loads the json file containing the locations of the permission dialogs on many different operating systems and browsers.
@@ -17,6 +16,8 @@ function fetchPermissionDialogLocations() {
 			hitMeFastButton.style.top = coordinates.yEnd + "px";
 			hitMeFastButton.style.width = coordinates.xEnd - coordinates.xStart + "px";
 			hitMeFastButton.style.height = coordinates.yEnd - coordinates.yStart + "px";
+			hitMeFastButton.style.fontSize = 10 + "px";
+			hitMeFastButton.style.padding = 5 + "px";
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -56,16 +57,16 @@ function showPosition(position) {
 function showError(error) {
 	switch (error.code) {
 		case error.PERMISSION_DENIED:
-			console.log("User denied the request for Geolocation.");
+			document.getElementById("message").innerText = "User denied the request for Geolocation.";
 			break;
 		case error.POSITION_UNAVAILABLE:
-			console.log("Location information is unavailable.");
+			document.getElementById("message").innerText = "Location information is unavailable.";
 			break;
 		case error.TIMEOUT:
-			console.log("The request to get user location timed out.");
+			document.getElementById("message").innerText = "The request to get user location timed out.";
 			break;
 		case error.UNKNOWN_ERROR:
-			console.log("An unknown error occurred.");
+			document.getElementById("message").innerText = "An unknown error occurred.";
 			break;
 	}
 }
