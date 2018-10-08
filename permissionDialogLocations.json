@@ -19,7 +19,10 @@
 	  "height": "15px"
 	},
 	"Safari": {
-	  "coordinates": "changing on resize. always in center of screen horizontally. Not possible to test on localhost because it is not served over https!"
+	  "left": "60%",
+	  "width": "10%",
+	  "bottom": "100px",
+	  "height": "20px"
 	}
   },
   "Windows": {
