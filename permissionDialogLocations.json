@@ -1,22 +1,22 @@
 {
   "MacOS": {
 	"Chrome": {
-	  "xStart": 380,
-	  "xEnd": 445,
-	  "yStart": 45,
-	  "yEnd": 75
+	  "left": "380px",
+	  "width": "65px",
+	  "bottom": "75px",
+	  "height": "30px"
 	},
 	"Firefox": {
-	  "xStart": 440,
-	  "xEnd": 620,
-	  "yStart": 65,
-	  "yEnd": 105
+	  "left": "440px",
+	  "width": "180px",
+	  "bottom": "105px",
+	  "height": "40px"
 	},
 	"Opera": {
-	  "xStart": 245,
-	  "xEnd": 300,
-	  "yStart": 90,
-	  "yEnd": 105
+	  "left": "245px",
+	  "width": "55px",
+	  "bottom": "105px",
+	  "height": "15px"
 	},
 	"Safari": {
 	  "coordinates": "changing on resize. always in center of screen horizontally. Not possible to test on localhost because it is not served over https!"
@@ -24,15 +24,15 @@
   },
   "Windows": {
 	"Chrome": {
-	  "xStart": 280,
-	  "xEnd": 345,
-	  "yStart": 45,
-	  "yEnd": 75
+	  "left": "280px",
+	  "width": "65px",
+	  "bottom": "75px",
+	  "height": "30px"
 	},
 	"Firefox": {
 	},
 	"Opera": {
-	},
+	}
   },
   "iPhone": {
 	"Chrome": {
@@ -57,24 +57,22 @@
   "Android": {
 	"Phone": "OnePlus5",
 	"Chrome": {
-	  "comment": "permission denied by user",
-	  "xStart": 300,
-	  "xEnd": 350,
-	  "yStart": 380,
-	  "yEnd": 430
+	  "left": 300,
+	  "width": 350,
+	  "bottom": 430,
+	  "height": 380
 	},
 	"Firefox": {
-	  "comment": "permission denied by user",
-	  "xStart": 300,
-	  "xEnd": 350,
-	  "yStart": 380,
-	  "yEnd": 430
+	  "left": "50%",
+	  "width": "40%",
+	  "bottom": "30%",
+	  "height": "5%"
 	},
 	"Opera": {
-	  "xStart": 320,
-	  "xEnd": 370,
-	  "yStart": 310,
-	  "yEnd": 340
+	  "left": "75%",
+	  "width": "10%",
+	  "bottom": "60%",
+	  "height": "5%"
 	}
   }
 }

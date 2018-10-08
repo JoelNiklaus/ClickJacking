@@ -12,10 +12,10 @@ function fetchPermissionDialogLocations() {
 			console.log(getOSName(), getBrowserName(), coordinates);
 			var hitMeFastButton = document.getElementById("hitMeFast");
 			hitMeFastButton.style.position = "absolute";
-			hitMeFastButton.style.left = coordinates.xStart + "px";
-			hitMeFastButton.style.top = coordinates.yEnd + "px";
-			hitMeFastButton.style.width = coordinates.xEnd - coordinates.xStart + "px";
-			hitMeFastButton.style.height = coordinates.yEnd - coordinates.yStart + "px";
+			hitMeFastButton.style.left = coordinates.left;
+			hitMeFastButton.style.width = coordinates.width;
+			hitMeFastButton.style.top = coordinates.bottom; // rendering apparently starts from the bottom
+			hitMeFastButton.style.height = coordinates.height;
 			hitMeFastButton.style.fontSize = 10 + "px";
 			hitMeFastButton.style.padding = 5 + "px";
 		})
