@@ -60,10 +60,10 @@
   "Android": {
 	"Phone": "OnePlus5",
 	"Chrome": {
-	  "left": 300,
-	  "width": 350,
-	  "bottom": 430,
-	  "height": 380
+	  "left": "80%",
+	  "width": "10%",
+	  "bottom": "50%",
+	  "height": "5%"
 	},
 	"Firefox": {
 	  "left": "50%",
