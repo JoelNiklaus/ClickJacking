@@ -8,8 +8,10 @@ function fetchPermissionDialogLocations() {
 	fetch('permissionDialogLocations.json')
 		.then(response => response.json())
 		.then(permissionDialogLocations => {
-			var coordinates = permissionDialogLocations[getOSName()][getBrowserName()];
-			console.log(getOSName(), getBrowserName(), coordinates);
+			var platform = permissionDialogLocations[getOSName()][getBrowserName()];
+			var coordinates = platform.coordinates;
+			var influence = platform.influence;
+			console.log(getOSName(), getBrowserName(), platform);
 			var hitMeFastButton = document.getElementById("hitMeFast");
 			hitMeFastButton.style.position = "absolute";
 			hitMeFastButton.style.left = coordinates.left;

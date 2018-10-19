@@ -1,36 +1,71 @@
 {
   "MacOS": {
 	"Chrome": {
-	  "left": "380px",
-	  "width": "65px",
-	  "bottom": "75px",
-	  "height": "30px"
+	  "coordinates": {
+		"left": "380px",
+		"width": "65px",
+		"bottom": "75px",
+		"height": "30px"
+	  },
+	  "influence": {
+		"bookmarkBar": "Changes the position of the prompt more upwards.",
+		"windowResize": "Does not change the position unless the window is really small (probably smaller than 400px wide)",
+		"fullScreen": "Changes the position of the prompt. Position is stable."
+	  }
 	},
 	"Firefox": {
-	  "left": "440px",
-	  "width": "180px",
-	  "bottom": "105px",
-	  "height": "40px"
+	  "coordinates": {
+		"left": "440px",
+		"width": "180px",
+		"bottom": "105px",
+		"height": "40px"
+	  },
+	  "influence": {
+		"bookmarkBar": "Changes the position of the prompt more upwards.",
+		"windowResize": "Changes the position of the prompt to the left with window widths smaller than 1300px",
+		"fullScreen": "No change in the position. Position is stable."
+	  }
 	},
 	"Opera": {
-	  "left": "245px",
-	  "width": "55px",
-	  "bottom": "105px",
-	  "height": "15px"
+	  "coordinates": {
+		"left": "245px",
+		"width": "55px",
+		"bottom": "105px",
+		"height": "15px"
+	  },
+	  "influence": {
+		"bookmarkBar": "Changes the position of the prompt more to the left.",
+		"windowResize": "Does not change the position unless the window is really small (probably smaller than 300px wide)",
+		"fullScreen": "No change in the position. Position is stable."
+	  }
 	},
 	"Safari": {
-	  "left": "60%",
-	  "width": "10%",
-	  "bottom": "100px",
-	  "height": "20px"
+	  "coordinates": {
+		"left": "60%",
+		"width": "10%",
+		"bottom": "100px",
+		"height": "20px"
+	  },
+	  "influence": {
+		"bookmarkBar": "Does not change the position of the prompt.",
+		"windowResize": "Changes the position of the prompt. Prompt is always centered.",
+		"fullScreen": "Prompt is always centered. No change in the y coordinate."
+	  }
 	}
   },
   "Windows": {
 	"Chrome": {
-	  "left": "280px",
-	  "width": "65px",
-	  "bottom": "75px",
-	  "height": "30px"
+	  "coordinates": {
+		"left": "280px",
+		"width": "65px",
+		"bottom": "75px",
+		"height": "30px"
+	  },
+	  "influence": {
+		"bookmarkBar": "",
+		"windowResize": "",
+		"fullScreen": ""
+	  }
 	},
 	"Firefox": {
 	},
@@ -60,22 +95,37 @@
   "Android": {
 	"Phone": "OnePlus5",
 	"Chrome": {
-	  "left": "80%",
-	  "width": "10%",
-	  "bottom": "50%",
-	  "height": "5%"
+	  "coordinates": {
+		"left": "80%",
+		"width": "10%",
+		"bottom": "50%",
+		"height": "5%"
+	  },
+	  "influence": {
+		"screenSize": ""
+	  }
 	},
 	"Firefox": {
-	  "left": "50%",
-	  "width": "40%",
-	  "bottom": "30%",
-	  "height": "5%"
+	  "coordinates": {
+		"left": "50%",
+		"width": "40%",
+		"bottom": "30%",
+		"height": "5%"
+	  },
+	  "influence": {
+		"screenSize": ""
+	  }
 	},
 	"Opera": {
-	  "left": "75%",
-	  "width": "10%",
-	  "bottom": "60%",
-	  "height": "5%"
+	  "coordinates": {
+		"left": "75%",
+		"width": "10%",
+		"bottom": "60%",
+		"height": "5%"
+	  },
+	  "influence": {
+		"screenSize": ""
+	  }
 	}
   }
 }
