@@ -1,4 +1,3 @@
-
 /**
  * Loads the json file containing the locations of the permission dialogs on many different operating systems and browsers.
  * On successful load, position the 'hitmefast'-button at the place of the 'allow'-button.
@@ -30,8 +29,9 @@ function fetchPermissionDialogLocations() {
  * Trigger the permission dialog
  */
 function getLocation() {
-	if (navigator.geolocation) { // triggers the html5 permission dialog!
-		navigator.geolocation.getCurrentPosition(showPosition, showError);
+	var api = navigator.geolocation;
+	if (api) { // triggers the html5 permission dialog!
+		api.getCurrentPosition(showPosition, showError);
 	} else {
 		showError();
 	}
@@ -72,3 +72,69 @@ function showError(error) {
 			break;
 	}
 }
+
+/**
+ * Asks for camera and/or microphone permissions to record video/audio
+ * @param options
+ * @param successCallback
+ * @param failureCallback
+ */
+function getUserMedia(type) {
+	var api = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+		navigator.mozGetUserMedia || navigator.msGetUserMedia;
+	if (api) {
+		(async () => {
+			const recorder = await record(type);
+			recorder.start();
+			await sleep(5000);
+			recorder.stop();
+		})();
+	}
+}
+
+/**
+ * Records video or audio
+ * @param type
+ * @returns {Promise<any>}
+ */
+const record = (type) =>
+	new Promise(async resolve => {
+		var media = document.querySelector(type);
+
+		var constraints = {video: true, audio: true};
+		var options = {mimeType: 'video/webm;codecs=vp9'};
+		if (type === 'audio') {
+			constraints = {video: false, audio: true};
+			options = {};
+		}
+
+		const stream = await navigator.mediaDevices.getUserMedia(constraints);
+		const mediaRecorder = new MediaRecorder(stream, options);
+
+		const recordedChunks = [];
+
+		mediaRecorder.addEventListener("dataavailable", event => {
+			recordedChunks.push(event.data);
+		});
+
+		const start = () => mediaRecorder.start();
+
+		const stop = () =>
+			new Promise(resolve => {
+				mediaRecorder.addEventListener("stop", () => {
+					const blob = new Blob(recordedChunks);
+					media.style.display = 'block';
+					media.src = URL.createObjectURL(blob);
+					resolve();
+				});
+
+				mediaRecorder.stop();
+			});
+
+		resolve({start, stop});
+	});
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+
+

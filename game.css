@@ -17,3 +17,16 @@
 	top: 250px;
 	left: 150px;
 }
+
+#audio {
+	position: absolute;
+	top: 575px;
+	left: 150px;
+}
+#video {
+	position: absolute;
+	top: 650px;
+	left: 150px;
+}
+
+
