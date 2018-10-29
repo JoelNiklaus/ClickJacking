@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="game.css">
+
+	<meta charset="utf-8">
+	<meta name="viewport"
+	      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no">
+	<title>Game</title>
+</head>
+<body>
+<div class="container">
+	<h1>Game</h1>
+	<form>
+		<div class="form-group">
+			<label for="nickname">Nickname</label>
+			<input type="text" class="form-control" id="nickname" aria-describedby="nicknamehelp"
+			       placeholder="Please enter your nickname.">
+			<small id="nicknamehelp" class="form-text text-muted">Used for highscores.</small>
+		</div>
+
+	</form>
+	<button onclick="redirect();" class="btn btn-primary">Start Game</button>
+</div>
+<script>
+	function redirect() {
+		var nickname = document.getElementById('nickname').value;
+		if (nickname.length <= 3){
+			document.getElementById('nicknamehelp').innerHTML = "Please enter a nick name longer than 3 characters";
+			document.getElementById('nicknamehelp').classList.remove("text-muted");
+			document.getElementById('nicknamehelp').classList.add("text-danger");
+		}
+		else
+			window.location = "/html5/game.html?nickname=" + nickname;
+	}
+
+</script>
+</body>
+</html>
