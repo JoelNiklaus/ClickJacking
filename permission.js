@@ -50,8 +50,8 @@ function showPosition(position) {
 
 	document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
 
-	document.getElementById("result").innerHTML = "You have just participated in a security experiment. Did you notice that we have access to your location now?" +
-		" We know exactly where you are, although you did not consciously give us permission.";
+	//document.getElementById("result").innerHTML = "You have just participated in a security experiment. Did you notice that we have access to your location now?" +
+	//	" We know exactly where you are, although you did not consciously give us permission.";
 
 	sendToServer(latlon);
 }
