@@ -20,6 +20,14 @@
 	color: red;
 }
 
+#distractor {
+	position: absolute;
+	top: 250px;
+	left: 0;
+	width: 750px;
+	z-index: -1000;
+}
+
 #mapholder {
 	position: absolute;
 	top: 250px;

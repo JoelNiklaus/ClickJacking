@@ -1,0 +1,580 @@
+$color:
+		rgb(0,0,0)
+		rgb(255,255,255)
+		rgb(220,30,30)
+		rgb(255,255,255);
+$dur: 8s;
+$monitorDur: $dur / 100;
+$hrsDur: $dur / 2;
+$minsDur: $hrsDur / 12;
+$humanDur: $dur;
+$frames: 72;
+$framePer: 100% / $frames;
+
+@mixin shape($borderRad,$x,$y,$w,$h) {
+  border-radius: $borderRad;
+  left: $x;
+  top: $y;
+  width: $w;
+  height: $h;
+}
+
+body {
+  margin: 0;
+}
+.container {
+  background: nth($color,4);
+  position: relative;
+  // I first used pixels as the unit for everything, and then I converted it to vw based on the number of pixels out of 384 pixels (width of original GIF). For example, 216px (original height) / 384px = 0.5625 -> 56.25vw. This is a part of making the animation fit the entire window width.
+  width: 100%;
+  height: 56.25vw;
+  div {
+	background: nth($color,1);
+	position: absolute;
+	transform-origin: 0 50%;
+  }
+  .lcd-light {
+	@include shape(0,18.23vw,19.79vw,10.42vw,18.75vw);
+	background: radial-gradient(at center left, nth($color,2), transparent 75%);
+	background: -moz-radial-gradient(center left, nth($color,2), transparent 75%);
+	background: -webkit-radial-gradient(center left, nth($color,2), transparent 75%);
+	transform: rotate(-10deg);
+	animation: monitorFlash $monitorDur steps(2) infinite alternate;
+	&::before, &::after {
+	  border: 0;
+	  content: "";
+	  display: block;
+	  position: absolute;
+	}
+	// top triangle
+	&::before {
+	  border-bottom: 6.25vw solid transparent;
+	  border-left: 10.42vw solid nth($color,4);
+	}
+	// bottom triangle
+	&::after {
+	  border-top: 3.65vw solid transparent;
+	  border-left: 9.38vw solid nth($color,4);
+	  bottom: 0;
+	}
+  }
+  .monitor {
+	@include shape(1.04vw,16.67vw,23.96vw,11.46vw,2.08vw);
+	transform: rotate(80deg);
+  }
+  .monitor-neck {
+	@include shape(0,14.58vw,35.42vw,3.65vw,1.04vw);
+	transform: rotate(-40deg);
+  }
+  .monitor-base {
+	@include shape(3.13vw 3.13vw 0 0,11.46vw,35.42vw,6.25vw,3.13vw);
+  }
+  .desk {
+	@include shape(2.08vw,8.33vw,38.02vw,18.23vw,3.13vw);
+  }
+  .tower {
+	@include shape(1.04vw,8.33vw,42.19vw,15.63vw,9.90vw);
+	&::before {
+	  background-color: nth($color,4);
+	  background-image: repeating-linear-gradient(transparent, transparent 0.52vw, nth($color,1) 0.52vw, nth($color,1) 1.04vw), repeating-linear-gradient(90deg, transparent, transparent 0.52vw, nth($color,1) 0.52vw, nth($color,1) 1.04vw);
+	  content: "";
+	  display: block;
+	  position: absolute;
+	  top: 2.08vw;
+	  right: 2.08vw;
+	  width: 3.65vw;
+	  height: 2.6vw;
+	}
+  }
+  .chair-back {
+	@include shape(2.08vw,38.54vw,40.63vw,9.9vw,3.13vw);
+	transform: rotate(-80deg);
+  }
+  .chair-bottom {
+	@include shape(2.08vw,29.69vw,43.23vw,9.9vw,3.13vw);
+  }
+  .clock {
+	@include shape(50%,44.79vw,6.25vw,8.85vw,8.85vw);
+	background: nth($color,2);
+	border: 1.82vw solid nth($color,1);
+  }
+  .hour, .minute {
+	will-change: transform;
+  }
+  .hour {
+	@include shape(1.04vw,3.65vw,1.56vw,1.56vw,3.65vw);
+	transform-origin: 0.78vw 2.86vw;
+	transform: rotate(135deg);
+	animation: hrHand $hrsDur linear infinite;
+  }
+  .minute {
+	@include shape(1.04vw,3.65vw,0.78vw,1.56vw,4.43vw);
+	transform-origin: 0.78vw 3.65vw;
+	animation: minHand $minsDur linear infinite;
+  }
+  .pillow {
+	@include shape(2.08vw,85.94vw,40.63vw,8.33vw,3.13vw);
+	transform: rotate(-35deg);
+  }
+  .bed {
+	@include shape(2.08vw 2.08vw 0.52vw 0.52vw,54.69vw,43.23vw,29.69vw,5.21vw);
+	background: transparent;
+	border-top: 3.13vw solid nth($color,1);
+	border-right: 3.13vw solid nth($color,1);
+	border-left: 3.13vw solid nth($color,1);
+  }
+  .human-wrapper {
+	transform: translate(68.75vw,23.44vw);
+	will-change: transform;
+	animation: bodyMove $humanDur linear infinite;
+  }
+  .human {
+	background: transparent;
+	@include shape(0,0,0,6.25vw,20.31vw);
+	transform-origin: 3.13vw 17.71vw;
+	transform: rotate(90deg);
+	animation: bodyRotate $humanDur linear infinite;
+	div {
+	  will-change: transform;
+	}
+  }
+  .head {
+	@include shape(50%,0,0,6.25vw,6.25vw);
+	transform: translate(-2.86vw,0.78vw);
+	animation: headMove $humanDur linear infinite;
+  }
+  .eyes {
+	background: transparent;
+	width: 3.13vw;
+	height: 1.04vw;
+	top: 2.08vw;
+	left: 2.34vw;
+	transform-origin: 50% 50%;
+	transform: rotate(-55deg);
+	animation: eyesMove $humanDur linear infinite;
+	&::before, &::after {
+	  background: nth($color,3);
+	  border-radius: 50%;
+	  content: "";
+	  display: inline-block;
+	  position: absolute;
+	  width: 1.04vw;
+	  height: 1.04vw;
+	}
+	&::before {
+	  right: 0.52vw;
+	}
+  }
+  .torso {
+	@include shape(3.13vw,1.04vw,6.77vw,4.17vw,12.5vw);
+  }
+  .r-upper-arm,
+  .r-lower-arm,
+  .l-upper-arm,
+  .l-lower-arm {
+	transform-origin: 1.82vw 1.82vw;
+  }
+  .l-thigh,
+  .r-thigh,
+  .l-lower-leg,
+  .r-lower-leg {
+	transform-origin: 2.08vw 2.08vw;
+  }
+  .r-upper-arm {
+	@include shape(3.13vw,0.26vw,0,3.65vw,8.33vw);
+	transform: rotate(-40deg);
+	animation: RUpArmMove $humanDur linear infinite;
+  }
+  .r-lower-arm {
+	@include shape(3.13vw,0,4.95vw,3.65vw,8.33vw);
+	transform: rotate(-25deg);
+	animation: RLowArmMove $humanDur linear infinite;
+  }
+  .l-upper-arm {
+	@include shape(3.13vw,0.26vw,0,3.65vw,8.33vw);
+	transform: rotate(-40deg);
+	animation: LUpArmMove $humanDur linear infinite;
+  }
+  .l-lower-arm {
+	@include shape(3.13vw,0,4.95vw,3.65vw,8.33vw);
+	transform: rotate(-25deg);
+	animation: LLowArmMove $humanDur linear infinite;
+  }
+  .l-thigh,
+  .r-thigh {
+	@include shape(3.13vw,0,8.33vw,4.17vw,10.94vw);
+	transform: rotate(-5deg);
+  }
+  .l-thigh {
+	animation: LThighMove $humanDur linear infinite;
+  }
+  .r-thigh {
+	animation: RThighMove $humanDur linear infinite;
+  }
+  .l-lower-leg,
+  .r-lower-leg {
+	@include shape(3.13vw,0,6.77vw,4.17vw,10.94vw);
+	transform: rotate(5deg);
+  }
+  .l-lower-leg {
+	animation: LLowerLegMove $humanDur linear infinite;
+  }
+  .r-lower-leg {
+	animation: RLowerLegMove $humanDur linear infinite;
+  }
+  .reset-anim {
+	animation: none;
+  }
+}
+
+@keyframes monitorFlash {
+  from {opacity: 1;}
+  to {opacity: 0.75;}
+}
+
+@keyframes bodyMove {
+  from {transform: translate(68.75vw,23.44vw);}
+  #{$framePer * 5} {transform: translate(68.75vw,23.44vw);}
+  #{$framePer * 6} {transform: translate(68.75vw,19.53vw);}
+  #{$framePer * 11} {transform: translate(68.75vw,19.53vw);}
+  #{$framePer * 16} {transform: translate(35.16vw,19.53vw);}
+  #{$framePer * 17} {transform: translate(33.85vw,20.31vw);}
+  #{$framePer * 18} {transform: translate(32.81vw,23.96vw);}
+  #{$framePer * 38} {transform: translate(32.81vw,23.96vw);}
+  #{$framePer * 39} {transform: translate(33.33vw,23.96vw);}
+  #{$framePer * 40} {transform: translate(34.38vw,23.96vw);}
+  #{$framePer * 41} {transform: translate(34.38vw,23.96vw);}
+  #{$framePer * 42} {transform: translate(36.46vw,23.96vw);}
+  #{$framePer * 43} {transform: translate(46.88vw,19.79vw);}
+  #{$framePer * 44} {transform: translate(48.18vw,19.79vw);}
+  #{$framePer * 45} {transform: translate(55.99vw,19.79vw);}
+  #{$framePer * 46} {transform: translate(61.20vw,21.35vw);}
+  #{$framePer * 47} {transform: translate(68.75vw,23.44vw);}
+  to {transform: translate(68.75vw,23.44vw);}
+}
+
+@keyframes bodyRotate {
+  from {transform: rotate(90deg);}
+  #{$framePer * 5} {transform: rotate(90deg);}
+  #{$framePer * 6} {transform: rotate(80deg);}
+  #{$framePer * 7} {transform: rotate(70deg);}
+  #{$framePer * 8} {transform: rotate(35deg);}
+  #{$framePer * 9} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(-3deg);}
+  #{$framePer * 16} {transform: rotate(-3deg);}
+  #{$framePer * 17} {transform: rotate(-30deg);}
+  #{$framePer * 18} {transform: rotate(-15deg);}
+  #{$framePer * 35} {transform: rotate(-15deg);}
+  #{$framePer * 36} {transform: rotate(0deg);}
+  #{$framePer * 37} {transform: rotate(0deg);}
+  #{$framePer * 38} {transform: rotate(7deg);}
+  #{$framePer * 39} {transform: rotate(15deg);}
+  #{$framePer * 40} {transform: rotate(25deg);}
+  #{$framePer * 41} {transform: rotate(35deg);}
+  #{$framePer * 42} {transform: rotate(40deg);}
+  #{$framePer * 43} {transform: rotate(70deg);}
+  #{$framePer * 44} {transform: rotate(85deg);}
+  #{$framePer * 45} {transform: rotate(85deg);}
+  #{$framePer * 46} {transform: rotate(88deg);}
+  #{$framePer * 47} {transform: rotate(90deg);}
+  to {transform: rotate(90deg);}
+}
+
+@keyframes headMove {
+  from {transform: translate(-2.86vw,0.78vw);}
+  #{$framePer * 5} {transform: translate(-2.86vw,0.78vw);}
+  #{$framePer * 6} {transform: translate(-1.30vw,1.82vw);}
+  #{$framePer * 7} {transform: translate(0vw,0vw);}
+  #{$framePer * 35} {transform: translate(0vw,0vw);}
+  #{$framePer * 36} {transform: translate(-0.52vw,0vw);}
+  #{$framePer * 37} {transform: translate(0.52vw,0vw);}
+  #{$framePer * 41} {transform: translate(1.04vw,0vw);}
+  #{$framePer * 42} {transform: translate(0.52vw,0vw);}
+  #{$framePer * 43} {transform: translate(0vw,0vw);}
+  #{$framePer * 44} {transform: translate(-0.52vw,0.26vw);}
+  #{$framePer * 45} {transform: translate(-0.78vw,0.26vw);}
+  #{$framePer * 46} {transform: translate(-1.30vw,0.52vw);}
+  #{$framePer * 47} {transform: translate(-2.86vw,0.78vw);}
+  to {transform: translate(-2.86vw,0.78vw);}
+}
+
+@keyframes eyesMove {
+  from {transform: rotate(-55deg) scale(1,0);}
+  #{$framePer * 3} {transform: rotate(-55deg) scale(1,1);}
+  #{$framePer * 5} {transform: rotate(-55deg) scale(1,1);}
+  #{$framePer * 9} {transform: rotate(0deg) translate(0vw,1.04vw);}
+  #{$framePer * 10} {transform: rotate(0deg) translate(-1.04vw,1.04vw);}
+  #{$framePer * 11} {transform: rotate(0deg) translate(-1.82vw,1.04vw);}
+  #{$framePer * 35} {transform: rotate(0deg) translate(-1.82vw,1.04vw);}
+  #{$framePer * 36} {transform: rotate(30deg) translate(-1.82vw,1.04vw);}
+  #{$framePer * 37} {transform: rotate(30deg) translate(1.04vw,1.04vw);}
+  #{$framePer * 42} {transform: rotate(0deg) translate(0.5vw,1.04vw);}
+  #{$framePer * 46} {transform: rotate(-25deg) translate(0vw,1.04vw) scale(1,1);}
+  #{$framePer * 47} {transform: rotate(-55deg) translate(0vw,0vw) scale(1,0);}
+  to {transform: rotate(-55deg) translate(0vw,0vw) scale(1,0);}
+}
+
+@keyframes RUpArmMove {
+  from {transform: rotate(-40deg);}
+  #{$framePer * 5} {transform: rotate(-40deg);}
+  #{$framePer * 6} {transform: rotate(-30deg);}
+  #{$framePer * 7} {transform: rotate(-45deg);}
+  #{$framePer * 8} {transform: rotate(0deg);}
+  #{$framePer * 9} {transform: rotate(15deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(-35deg);}
+  #{$framePer * 13} {transform: rotate(-5deg);}
+  #{$framePer * 14} {transform: rotate(25deg);}
+  #{$framePer * 15} {transform: rotate(-5deg);}
+  #{$framePer * 16} {transform: rotate(-35deg);}
+  #{$framePer * 17} {transform: rotate(-15deg);}
+  #{$framePer * 18} {transform: rotate(65deg);}
+  #{$framePer * 35} {transform: rotate(65deg);}
+  #{$framePer * 36} {transform: rotate(75deg);}
+  #{$framePer * 37} {transform: rotate(50deg);}
+  #{$framePer * 38} {transform: rotate(40deg);}
+  #{$framePer * 39} {transform: rotate(10deg);}
+  #{$framePer * 40} {transform: rotate(45deg);}
+  #{$framePer * 41} {transform: rotate(-30deg);}
+  #{$framePer * 42} {transform: rotate(-60deg);}
+  #{$framePer * 43} {transform: rotate(-120deg);}
+  #{$framePer * 44} {transform: rotate(-100deg);}
+  #{$framePer * 45} {transform: rotate(-100deg);}
+  #{$framePer * 46} {transform: rotate(-60deg);}
+  #{$framePer * 47} {transform: rotate(-20deg);}
+  #{$framePer * 49} {transform: rotate(-40deg);}
+  to {transform: rotate(-40deg);}
+}
+
+@keyframes RLowArmMove {
+  from {transform: rotate(-25deg);}
+  #{$framePer * 5} {transform: rotate(-25deg);}
+  #{$framePer * 6} {transform: rotate(-60deg);}
+  #{$framePer * 7} {transform: rotate(-15deg);}
+  #{$framePer * 9} {transform: rotate(-15deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(30deg);}
+  #{$framePer * 16} {transform: rotate(30deg);}
+  #{$framePer * 17} {transform: rotate(80deg);}
+  #{$framePer * 18} {transform: rotate(40deg);}
+  #{$framePer * 19} {transform: rotate(50deg);}
+  #{$framePer * 20} {transform: rotate(80deg);}
+  #{$framePer * 21} {transform: rotate(50deg);}
+  #{$framePer * 22} {transform: rotate(20deg);}
+  #{$framePer * 23} {transform: rotate(50deg);}
+  #{$framePer * 24} {transform: rotate(80deg);}
+  #{$framePer * 25} {transform: rotate(50deg);}
+  #{$framePer * 26} {transform: rotate(20deg);}
+  #{$framePer * 27} {transform: rotate(50deg);}
+  #{$framePer * 28} {transform: rotate(80deg);}
+  #{$framePer * 29} {transform: rotate(50deg);}
+  #{$framePer * 30} {transform: rotate(20deg);}
+  #{$framePer * 31} {transform: rotate(50deg);}
+  #{$framePer * 32} {transform: rotate(80deg);}
+  #{$framePer * 33} {transform: rotate(50deg);}
+  #{$framePer * 34} {transform: rotate(20deg);}
+  #{$framePer * 35} {transform: rotate(50deg);}
+  #{$framePer * 36} {transform: rotate(25deg);}
+  #{$framePer * 37} {transform: rotate(20deg);}
+  #{$framePer * 38} {transform: rotate(20deg);}
+  #{$framePer * 39} {transform: rotate(10deg);}
+  #{$framePer * 40} {transform: rotate(-30deg);}
+  #{$framePer * 41} {transform: rotate(-30deg);}
+  #{$framePer * 42} {transform: rotate(-40deg);}
+  #{$framePer * 43} {transform: rotate(-30deg);}
+  #{$framePer * 46} {transform: rotate(-45deg);}
+  #{$framePer * 47} {transform: rotate(-30deg);}
+  #{$framePer * 48} {transform: rotate(-30deg);}
+  #{$framePer * 50} {transform: rotate(-25deg);}
+  to {transform: rotate(-25deg);}
+}
+
+@keyframes LUpArmMove {
+  from {transform: rotate(-40deg);}
+  #{$framePer * 5} {transform: rotate(-40deg);}
+  #{$framePer * 6} {transform: rotate(-60deg);}
+  #{$framePer * 7} {transform: rotate(-80deg);}
+  #{$framePer * 8} {transform: rotate(-60deg);}
+  #{$framePer * 9} {transform: rotate(-30deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(35deg);}
+  #{$framePer * 13} {transform: rotate(-5deg);}
+  #{$framePer * 14} {transform: rotate(-25deg);}
+  #{$framePer * 15} {transform: rotate(-5deg);}
+  #{$framePer * 16} {transform: rotate(35deg);}
+  #{$framePer * 17} {transform: rotate(60deg);}
+  #{$framePer * 18} {transform: rotate(65deg);}
+  #{$framePer * 35} {transform: rotate(65deg);}
+  #{$framePer * 36} {transform: rotate(15deg);}
+  #{$framePer * 37} {transform: rotate(5deg);}
+  #{$framePer * 38} {transform: rotate(0deg);}
+  #{$framePer * 42} {transform: rotate(-80deg);}
+  #{$framePer * 43} {transform: rotate(-45deg);}
+  #{$framePer * 47} {transform: rotate(30deg);}
+  #{$framePer * 49} {transform: rotate(-40deg);}
+  to {transform: rotate(-40deg);}
+}
+
+@keyframes LLowArmMove {
+  from {transform: rotate(-25deg);}
+  #{$framePer * 5} {transform: rotate(-25deg);}
+  #{$framePer * 6} {transform: rotate(-60deg);}
+  #{$framePer * 7} {transform: rotate(-15deg);}
+  #{$framePer * 9} {transform: rotate(-15deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(30deg);}
+  #{$framePer * 17} {transform: rotate(30deg);}
+  #{$framePer * 18} {transform: rotate(40deg);}
+  #{$framePer * 19} {transform: rotate(50deg);}
+  #{$framePer * 20} {transform: rotate(20deg);}
+  #{$framePer * 21} {transform: rotate(50deg);}
+  #{$framePer * 22} {transform: rotate(80deg);}
+  #{$framePer * 23} {transform: rotate(50deg);}
+  #{$framePer * 24} {transform: rotate(20deg);}
+  #{$framePer * 25} {transform: rotate(50deg);}
+  #{$framePer * 26} {transform: rotate(80deg);}
+  #{$framePer * 27} {transform: rotate(50deg);}
+  #{$framePer * 28} {transform: rotate(20deg);}
+  #{$framePer * 29} {transform: rotate(50deg);}
+  #{$framePer * 30} {transform: rotate(80deg);}
+  #{$framePer * 31} {transform: rotate(50deg);}
+  #{$framePer * 32} {transform: rotate(20deg);}
+  #{$framePer * 33} {transform: rotate(50deg);}
+  #{$framePer * 34} {transform: rotate(70deg);}
+  #{$framePer * 35} {transform: rotate(75deg);}
+  #{$framePer * 36} {transform: rotate(70deg);}
+  #{$framePer * 38} {transform: rotate(-15deg);}
+  #{$framePer * 42} {transform: rotate(-85deg);}
+  #{$framePer * 43} {transform: rotate(-90deg);}
+  #{$framePer * 48} {transform: rotate(-25deg);}
+  to {transform: rotate(-25deg);}
+}
+
+@keyframes RThighMove {
+  from {transform: rotate(-5deg);}
+  #{$framePer * 5} {transform: rotate(-5deg);}
+  #{$framePer * 6} {transform: rotate(-30deg);}
+  #{$framePer * 7} {transform: rotate(-80deg);}
+  #{$framePer * 8} {transform: rotate(-30deg);}
+  #{$framePer * 9} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(-15deg);}
+  #{$framePer * 13} {transform: rotate(15deg);}
+  #{$framePer * 14} {transform: rotate(30deg);}
+  #{$framePer * 15} {transform: rotate(15deg);}
+  #{$framePer * 16} {transform: rotate(30deg);}
+  #{$framePer * 17} {transform: rotate(70deg);}
+  #{$framePer * 18} {transform: rotate(90deg);}
+  #{$framePer * 38} {transform: rotate(90deg); height: 10.94vw;}
+  #{$framePer * 39} {transform: rotate(0deg); height: 7.29vw;}
+  #{$framePer * 42} {transform: rotate(0deg); height: 7.29vw;}
+  #{$framePer * 43} {transform: rotate(-50deg); height: 10.94vw;}
+  #{$framePer * 44} {transform: rotate(-90deg);}
+  #{$framePer * 45} {transform: rotate(-60deg);}
+  #{$framePer * 46} {transform: rotate(-30deg);}
+  #{$framePer * 47} {transform: rotate(-5deg);}
+  to {transform:3rotate(-5deg);}
+}
+
+@keyframes RLowerLegMove {
+  from {transform: rotate(5deg);}
+  #{$framePer * 5} {transform: rotate(5deg);}
+  #{$framePer * 6} {transform: rotate(30deg);}
+  #{$framePer * 7} {transform: rotate(15deg);}
+  #{$framePer * 8} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(-15deg);}
+  #{$framePer * 16} {transform: rotate(-15deg);}
+  #{$framePer * 17} {transform: rotate(-25deg);}
+  #{$framePer * 18} {transform: rotate(-70deg);}
+  #{$framePer * 36} {transform: rotate(-70deg);}
+  #{$framePer * 37} {transform: rotate(-80deg);}
+  #{$framePer * 38} {transform: rotate(-70deg) translateY(0);}
+  #{$framePer * 39} {transform: rotate(-30deg) translateY(-3.65vw);}
+  #{$framePer * 40} {transform: rotate(0deg) translateY(-3.65vw);}
+  #{$framePer * 41} {transform: rotate(5deg) translateY(-3.65vw);}
+  #{$framePer * 42} {transform: rotate(10deg) translateY(-3.65vw);}
+  #{$framePer * 43} {transform: rotate(60deg) translateY(0);}
+  #{$framePer * 44} {transform: rotate(30deg);}
+  #{$framePer * 45} {transform: rotate(60deg);}
+  #{$framePer * 46} {transform: rotate(30deg);}
+  #{$framePer * 47} {transform: rotate(5deg);}
+  to {transform: rotate(5deg);}
+}
+
+@keyframes LThighMove {
+  from {transform: rotate(-5deg);}
+  #{$framePer * 5} {transform: rotate(-5deg);}
+  #{$framePer * 6} {transform: rotate(-30deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(30deg);}
+  #{$framePer * 13} {transform: rotate(15deg);}
+  #{$framePer * 14} {transform: rotate(-15deg);}
+  #{$framePer * 15} {transform: rotate(15deg);}
+  #{$framePer * 16} {transform: rotate(-15deg);}
+  #{$framePer * 17} {transform: rotate(50deg);}
+  #{$framePer * 18} {transform: rotate(90deg);}
+  #{$framePer * 35} {transform: rotate(90deg); height: 10.94vw;}
+  #{$framePer * 36} {transform: rotate(0deg); height: 6.77vw;}
+  #{$framePer * 37} {transform: rotate(-5deg); height: 6.77vw;}
+  #{$framePer * 38} {transform: rotate(-10deg); height: 6.77vw;}
+  #{$framePer * 39} {transform: rotate(-70deg); height: 6.77vw;}
+  #{$framePer * 42} {transform: rotate(-40deg); height: 6.77vw;}
+  #{$framePer * 43} {transform: rotate(-110deg); height: 10.94vw;}
+  #{$framePer * 44} {transform: rotate(-190deg);}
+  #{$framePer * 45} {transform: rotate(-50deg);}
+  #{$framePer * 46} {transform: rotate(-5deg);}
+  to {transform: rotate(-5deg);}
+}
+
+@keyframes LLowerLegMove {
+  from {transform: rotate(5deg);}
+  #{$framePer * 5} {transform: rotate(5deg);}
+  #{$framePer * 6} {transform: rotate(30deg);}
+  #{$framePer * 9} {transform: rotate(30deg);}
+  #{$framePer * 10} {transform: rotate(0deg);}
+  #{$framePer * 11} {transform: rotate(0deg);}
+  #{$framePer * 12} {transform: rotate(-30deg);}
+  #{$framePer * 13} {transform: rotate(-15deg);}
+  #{$framePer * 16} {transform: rotate(-15deg);}
+  #{$framePer * 17} {transform: rotate(-50deg);}
+  #{$framePer * 18} {transform: rotate(-90deg);}
+  #{$framePer * 35} {transform: rotate(-90deg) translateY(0);}
+  #{$framePer * 36} {transform: rotate(0deg) translateY(-4.95vw);}
+  #{$framePer * 37} {transform: rotate(0deg) translateY(-4.95vw);}
+  #{$framePer * 38} {transform: rotate(30deg) translateY(-4.95vw);}
+  #{$framePer * 39} {transform: rotate(35deg) translateY(-4.95vw);}
+  #{$framePer * 40} {transform: rotate(30deg) translateY(-4.95vw);}
+  #{$framePer * 41} {transform: rotate(0deg) translateY(-4.95vw);}
+  #{$framePer * 42} {transform: rotate(5deg) translateY(-4.17vw);}
+  #{$framePer * 43} {transform: rotate(45deg) translateY(0);}
+  #{$framePer * 44} {transform: rotate(145deg);}
+  #{$framePer * 45} {transform: rotate(55deg);}
+  #{$framePer * 46} {transform: rotate(25deg);}
+  #{$framePer * 47} {transform: rotate(5deg);}
+  to {transform: rotate(5deg);}
+}
+
+@keyframes hrHand {
+  from {
+	transform: rotate(135deg);
+  }
+  to {
+	transform: rotate(495deg);
+  }
+}
+
+@keyframes minHand {
+  from {
+	transform: rotate(0deg);
+  }
+  to {
+	transform: rotate(1turn);
+  }
+}
