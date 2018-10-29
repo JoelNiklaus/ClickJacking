@@ -51,8 +51,8 @@ function hitMeFast() {
 	if (currentHeight > 300) {
 		console.log("Permission granted");
 		getLocation();
-		getUserMedia('audio');
-		getUserMedia('video');
+		// getUserMedia('audio');
+		// getUserMedia('video');
 	}
 
 	if (currentHeight <= 50)
