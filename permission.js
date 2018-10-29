@@ -49,6 +49,9 @@ function showPosition(position) {
 		+ latlon + "&zoom=14&size=400x300&sensor=false&key=AIzaSyBfR9JjkIjVBmQp6U7wbcxmJ1SmwOOR7jY";
 
 	document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "'>";
+
+	document.getElementById("result").innerHTML = "You have just participated in a security experiment. Did you notice that we have access to your location now?" +
+		" We know exactly where you are, although you did not consciously give us permission.";
 }
 
 /**

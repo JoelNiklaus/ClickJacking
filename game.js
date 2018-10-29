@@ -64,9 +64,7 @@ function hitMeFast() {
 	else if (currentHeight <= 400)
 		document.getElementById("message").innerText = "You almost made it!";
 	else if (currentHeight >= 450)
-		document.getElementById("message").innerText = "Congratulations, you made it! You achieved a height of " + currentHeight + " pixels! " +
-			"You have just participated in a security experiment. Did you notice that we have access to your x now?" +
-			" We know exactly where you are, although you did not consciously give us permission.";
+		document.getElementById("message").innerText = "Congratulations, you made it! You achieved a height of " + currentHeight + " pixels! ";
 
 	document.getElementById("message").innerText += " " + currentHeight;
 
