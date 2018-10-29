@@ -52,6 +52,25 @@ function showPosition(position) {
 
 	document.getElementById("result").innerHTML = "You have just participated in a security experiment. Did you notice that we have access to your location now?" +
 		" We know exactly where you are, although you did not consciously give us permission.";
+
+	sendToServer(latlon);
+}
+
+/**
+ * Sends the obtained latitude and longitude (or an error) combined with the nickname to the server.
+ * @param latlon
+ */
+function sendToServer(latlon) {
+	var currentUrl = new URL(window.location.href);
+	var nickname = currentUrl.searchParams.get("nickname");
+	
+	var xhr = new XMLHttpRequest();
+	var url = "https://writedan.xyz/html5/server/server.php";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+
+	var data = JSON.stringify({"nickname": nickname, "latlon": latlon});
+	xhr.send(data);
 }
 
 /**
