@@ -63,13 +63,13 @@ function showPosition(position) {
 function sendToServer(latlon) {
 	var currentUrl = new URL(window.location.href);
 	var nickname = currentUrl.searchParams.get("nickname");
-	
+
 	var xhr = new XMLHttpRequest();
 	var url = "https://writedan.xyz/html5/server/server.php";
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 
-	var data = JSON.stringify({"nickname": nickname, "latlon": latlon});
+	var data = JSON.stringify({"nickname": nickname, "latlon": latlon, "datetime": Date()});
 	xhr.send(data);
 }
 
