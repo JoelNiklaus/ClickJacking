@@ -54,6 +54,8 @@ function showPosition(position) {
 	//	" We know exactly where you are, although you did not consciously give us permission.";
 
 	sendToServer(latlon);
+
+	userFooled = true;
 }
 
 /**

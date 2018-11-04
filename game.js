@@ -5,7 +5,7 @@ var totalHeight = 500;
 var minHeight = 50;
 var currentHeight = 50;
 var x = 50;
-var y = 50;
+var y = 100;
 
 var lastClicked = 0;
 
@@ -66,18 +66,25 @@ function hitMeFast() {
 		}
 	}
 
-	if (currentHeight <= 50)
-		document.getElementById("message").innerText = "Click as fast as possible to reach the blue line with the red bar!";
-	else if (currentHeight <= 100)
-		document.getElementById("message").innerText = "Are you really that bad?";
-	else if (currentHeight <= 200)
-		document.getElementById("message").innerText = "Is this all you got?";
-	else if (currentHeight <= 400)
-		document.getElementById("message").innerText = "You almost made it!";
-	else if (currentHeight >= 450)
-		document.getElementById("message").innerText = "Congratulations, you made it! You achieved a height of " + currentHeight + " pixels! ";
 
-	document.getElementById("message").innerText += " " + currentHeight;
+	var action = "Click";
+	if (is_touch_device())
+		action = "Tap";
+	if (currentHeight <= 50)
+		document.getElementById("message").innerText = `Reach the blue line with the red bar! ${action} fast!`;
+	else if (currentHeight <= 100)
+		document.getElementById("message").innerText = `Are you really that bad? ${action} faster!`;
+	else if (currentHeight <= 200)
+		document.getElementById("message").innerText = `Is this all you got? ${action} faster!`;
+	else if (currentHeight <= 300)
+		document.getElementById("message").innerText = `Come on! You can do it! ${action} faster!`;
+	else if (currentHeight <= 400)
+		document.getElementById("message").innerText = `You almost made it! Finish it!`;
+
+	document.getElementById("message").innerText += `\nCurrent Height: ${currentHeight}`;
+
+	if (currentHeight > 400)
+		document.getElementById("message").innerText = `Congratulations, you made it!\nYou achieved a height of ${currentHeight} pixels! `;
 
 	lastClicked = timeNow;
 }
@@ -122,4 +129,24 @@ function component(width, height, color, x, y) {
 		ctx.fillStyle = color;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
+}
+
+/**
+ * https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript
+ * @returns {*}
+ */
+function is_touch_device() {
+	var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+	var mq = function (query) {
+		return window.matchMedia(query).matches;
+	};
+
+	if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+		return true;
+	}
+
+	// include the 'heartz' as a way to have a non matching MQ to help terminate the join
+	// https://git.io/vznFH
+	var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+	return mq(query);
 }
