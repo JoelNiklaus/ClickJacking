@@ -2,6 +2,11 @@
 	position: absolute;
 	top: 0;
 	left: 0;
+	z-index: 1;
+}
+
+#celebration {
+	z-index: 2;
 }
 
 #result {
@@ -14,10 +19,11 @@
 
 #message {
 	position: absolute;
-	top: 20px;
-	left: 20px;
-	width: 500px;
+	top: 25px;
+	left: 25px;
+	width: 100%;
 	color: red;
+	font-weight: bold;
 }
 
 #distractor {
@@ -25,7 +31,7 @@
 	top: 250px;
 	left: 0;
 	width: 750px;
-	z-index: -1000;
+	z-index: -1;
 }
 
 #mapholder {

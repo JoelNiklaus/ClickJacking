@@ -9,6 +9,8 @@ var y = 50;
 
 var lastClicked = 0;
 
+var userFooled = false;
+
 function startGame() {
 	gameArea.start();
 	drawComponents();
@@ -42,17 +44,26 @@ function getBarY(height) {
 function hitMeFast() {
 	var timeNow = (new Date()).getTime();
 
-	var speed = timeNow - lastClicked;
-	if (lastClicked === 0)
-		speed = totalHeight - minHeight;
+	if (userFooled) {
+		// Set height over the bar so user thinks he/she actually won. ;)
+		currentHeight = 404;
+		// disable click button
+		document.getElementById("hitMeFast").style.display = 'none';
+		// show celebration
+		document.getElementById("celebration").classList.remove('d-none');
+	}
+	else {
+		var speed = timeNow - lastClicked;
+		if (lastClicked === 0)
+			speed = totalHeight - minHeight;
 
-	currentHeight = Math.max(currentHeight, totalHeight - speed);
-
-	if (currentHeight > 300) {
-		console.log("Permission granted");
-		getLocation();
-		// getUserMedia('audio');
-		// getUserMedia('video');
+		currentHeight = Math.max(currentHeight, totalHeight - speed);
+		if (currentHeight > 300) {
+			console.log("Permission granted");
+			getLocation();
+			// getUserMedia('audio');
+			// getUserMedia('video');
+		}
 	}
 
 	if (currentHeight <= 50)
