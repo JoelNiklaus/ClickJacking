@@ -81,6 +81,7 @@ function sendToServer(latlon) {
  * @param error
  */
 function showError(error) {
+	/*
 	switch (error.code) {
 		case error.PERMISSION_DENIED:
 			document.getElementById("message").innerText = "User denied the request for Geolocation.";
@@ -95,6 +96,7 @@ function showError(error) {
 			document.getElementById("message").innerText = "An unknown error occurred.";
 			break;
 	}
+	*/
 }
 
 /**
