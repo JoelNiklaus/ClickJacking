@@ -67,7 +67,7 @@ function sendToServer(latlon) {
 	var nickname = currentUrl.searchParams.get("nickname");
 
 	var xhr = new XMLHttpRequest();
-	var url = "https://writedan.xyz/html5/server/server.php";
+	var url = window.location.origin + "/html5/server/server.php";
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 

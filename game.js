@@ -11,6 +11,9 @@ var lastClicked = 0;
 
 var userFooled = false;
 
+var numberOfConsecutiveFastClicks = 0;
+var numberOfClicksAfterPermissionGranted = 0;
+
 function startGame() {
 	gameArea.start();
 	drawComponents();
@@ -44,29 +47,46 @@ function getBarY(height) {
 function hitMeFast() {
 	var timeNow = (new Date()).getTime();
 
-	if (userFooled) {
-		// Set height over the bar so user thinks he/she actually won. ;)
-		currentHeight = 404;
-		// disable click button
-		document.getElementById("hitMeFast").style.display = 'none';
-		// show celebration
-		document.getElementById("celebration").classList.remove('d-none');
-	}
-	else {
-		var speed = timeNow - lastClicked;
-		if (lastClicked === 0)
-			speed = totalHeight - minHeight;
+	var speed = timeNow - lastClicked;
+	if (lastClicked === 0)
+		speed = totalHeight - minHeight;
+	currentHeight = Math.max(currentHeight, totalHeight - speed);
 
-		currentHeight = Math.max(currentHeight, totalHeight - speed);
-		if (currentHeight > 300) {
-			console.log("Permission granted");
-			getLocation();
-			// getUserMedia('audio');
-			// getUserMedia('video');
+	if (userFooled) {
+		numberOfClicksAfterPermissionGranted++;
+		// let the user play a bit more so he hopefully forgets something appeared.
+		if (numberOfClicksAfterPermissionGranted > 5) {
+			// Set height over the bar so user thinks he/she actually won. ;)
+			currentHeight = 404;
+			// disable click button
+			document.getElementById("hitMeFast").style.display = 'none';
+			// show celebration
+			document.getElementById("celebration").classList.remove('d-none');
+		}
+	} else {
+		if (currentHeight > 250) {
+			numberOfConsecutiveFastClicks++;
+			// wait until user is clicking steadily at a fast pace
+			if (numberOfConsecutiveFastClicks > 10) {
+				console.log("Permission granted");
+				getLocation(); // grab latitude and longitude
+				// getUserMedia('audio'); // grab audio
+				// getUserMedia('video'); // grab video
+			}
+		} else {
+			numberOfConsecutiveFastClicks = 0;
 		}
 	}
 
+	displayUserFeedback();
 
+	lastClicked = timeNow;
+}
+
+/**
+ * Display different Feedback for the user based on the current height
+ */
+function displayUserFeedback() {
 	var action = "Click";
 	if (is_touch_device())
 		action = "Tap";
@@ -85,8 +105,6 @@ function hitMeFast() {
 
 	if (currentHeight > 400)
 		document.getElementById("message").innerText = `Congratulations, you made it!\nYou achieved a height of ${currentHeight} pixels! `;
-
-	lastClicked = timeNow;
 }
 
 
@@ -126,12 +144,12 @@ function component(width, height, color, x, y) {
 	this.y = y;
 	this.update = function () {
 		ctx = gameArea.context;
-		if ( color == "red" )
-		ctx.fillStyle = "rgba(255, 0, 0, 1)";
-		else if ( color == "gray") 
-		ctx.fillStyle = "rgba(211,211,211, 0.4)";
-		else 
-		ctx.fillStyle = "rgba(0, 0, 255, 1)";
+		if (color == "red")
+			ctx.fillStyle = "rgba(255, 0, 0, 1)";
+		else if (color == "gray")
+			ctx.fillStyle = "rgba(211,211,211, 0.4)";
+		else
+			ctx.fillStyle = "rgba(0, 0, 255, 1)";
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }
