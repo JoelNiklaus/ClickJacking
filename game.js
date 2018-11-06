@@ -20,7 +20,7 @@ function startGame() {
  * draws the graphical game components
  */
 function drawComponents() {
-	barBackground = new component(50, totalHeight, "#CACACA", x, y);
+	barBackground = new component(50, totalHeight, "gray", x, y);
 	barBackground.update();
 	currentHeight = Math.max(minHeight, currentHeight - 1);
 	bar = new component(40, currentHeight, "red", x + 5, getBarY(currentHeight));
@@ -126,7 +126,12 @@ function component(width, height, color, x, y) {
 	this.y = y;
 	this.update = function () {
 		ctx = gameArea.context;
-		ctx.fillStyle = color;
+		if ( color == "red" )
+		ctx.fillStyle = "rgba(255, 0, 0, 1)";
+		else if ( color == "gray") 
+		ctx.fillStyle = "rgba(211,211,211, 0.4)";
+		else 
+		ctx.fillStyle = "rgba(0, 0, 255, 1)";
 		ctx.fillRect(this.x, this.y, this.width, this.height);
 	}
 }
