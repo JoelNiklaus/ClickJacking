@@ -13,16 +13,16 @@
 <body>
 <div class="container">
 	<h1>Game</h1>
-	<form>
+	<form onsubmit="return redirect();">
 		<div class="form-group">
 			<label for="nickname">Nickname</label>
 			<input type="text" class="form-control" id="nickname" aria-describedby="nicknamehelp"
 			       placeholder="Please enter your nickname.">
 			<small id="nicknamehelp" class="form-text text-muted">Used for highscores.</small>
 		</div>
-
+		<button type="submit" onclick="redirect();" class="btn btn-primary">Start Game</button>
 	</form>
-	<button onclick="redirect();" class="btn btn-primary">Start Game</button>
+
 </div>
 <script>
 	function redirect() {
@@ -34,6 +34,7 @@
 		}
 		else
 			window.location = "/html5/game.html?nickname=" + nickname;
+		return false;
 	}
 
 </script>
