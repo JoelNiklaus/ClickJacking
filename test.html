@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<meta charset="utf-8">
+	<meta name="viewport"
+	      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no">
+	<title>Location Test</title>
+</head>
+<body>
+
+<p id="message">Your Location</p>
+
+
+<button onclick="getLocation()">Get Location</button>
+
+<script>
+	function getLocation() {
+		var api = navigator.geolocation;
+		api.getCurrentPosition(showPosition, showError);
+		/*
+		if (api) { // triggers the html5 permission dialog!
+			api.getCurrentPosition(showPosition, showError);
+		} else {
+			showError();
+		}
+		*/
+	}
+
+	function showPosition(position) {
+		document.getElementById("message").innerText = position.coords.latitude + "," + position.coords.longitude;
+	}
+
+	function showError() {
+		document.getElementById("message").innerText = "Permission has not been given";
+	}
+</script>
+
+</body>
+</html>
