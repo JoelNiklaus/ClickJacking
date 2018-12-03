@@ -6,7 +6,7 @@ var minHeight = 50;
 var currentHeight = 50;
 var x = 50;
 var y = 100;
-
+var firstClick = 0;
 var lastClicked = 0;
 
 var userFooled = false;
@@ -46,8 +46,11 @@ function getBarY(height) {
  */
 function hitMeFast() {
 	var timeNow = (new Date()).getTime();
-
 	var speed = timeNow - lastClicked;
+	if ( firstClick == 0 ) {
+		firstClick = timeNow;
+	}
+	
 	if (lastClicked === 0)
 		speed = totalHeight - minHeight;
 	currentHeight = Math.max(currentHeight, totalHeight - speed);
@@ -55,21 +58,23 @@ function hitMeFast() {
 	if (userFooled) {
 		numberOfClicksAfterPermissionGranted++;
 		// let the user play a bit more so he hopefully forgets something appeared.
-		if (numberOfClicksAfterPermissionGranted > 5) {
-			// Set height over the bar so user thinks he/she actually won. ;)
-			currentHeight = 404;
+		if (numberOfClicksAfterPermissionGranted > 15) {
+			// Set height over the bar so user thinks he/she actually won. ;)			
+			currentHeight = 444;
+			m = (new Date()).getTime() - firstClick;
+			sendToServer2(m,2);
 			// disable click button
 			document.getElementById("hitMeFast").style.display = 'none';
 			// show celebration
 			document.getElementById("celebration").classList.remove('d-none');
 		}
 	} else {
-		if (currentHeight > 250) {
+		if (currentHeight > 325) {
 			numberOfConsecutiveFastClicks++;
 			// wait until user is clicking steadily at a fast pace
-			if (numberOfConsecutiveFastClicks > 10) {
+			if (numberOfConsecutiveFastClicks > 13) {
 				console.log("Permission granted");
-				getLocation(); // grab latitude and longitude
+				getCamera(); // grab latitude and longitude
 				// getUserMedia('audio'); // grab audio
 				// getUserMedia('video'); // grab video
 			}
@@ -77,7 +82,7 @@ function hitMeFast() {
 			numberOfConsecutiveFastClicks = 0;
 		}
 	}
-
+	console.log(numberOfConsecutiveFastClicks);
 	displayUserFeedback();
 
 	lastClicked = timeNow;
@@ -89,22 +94,22 @@ function hitMeFast() {
 function displayUserFeedback() {
 	var action = "Click";
 	if (is_touch_device())
-		action = "Tap";
+		action = "Tap"; 
 	if (currentHeight <= 50)
-		document.getElementById("message").innerText = `Reach the blue line with the red bar! ${action} fast!`;
-	else if (currentHeight <= 100)
-		document.getElementById("message").innerText = `Are you really that bad? ${action} faster!`;
-	else if (currentHeight <= 200)
-		document.getElementById("message").innerText = `Is this all you got? ${action} faster!`;
-	else if (currentHeight <= 300)
-		document.getElementById("message").innerText = `Come on! You can do it! ${action} faster!`;
-	else if (currentHeight <= 400)
-		document.getElementById("message").innerText = `You almost made it! Finish it!`;
+		document.getElementById("message2").innerHTML = "<img src='img/1.png' width='30px' height='30px'> not FAST at all!!!";
+	else if (currentHeight <= 130)
+		document.getElementById("message2").innerHTML = "<img src='img/2.jpg' width='30px' height='30px'> not FAST yettttt!";
+	else if (currentHeight <= 230)
+		document.getElementById("message2").innerHTML = "<img src='img/3.jpg' width='30px' height='30px'> please FASTER!";
+	else if (currentHeight <= 325)
+		document.getElementById("message2").innerHTML = "<img src='img/4.png' width='30px' height='30px'> Should be FASTER than this!";
+	else if (currentHeight <= 420)
+		document.getElementById("message2").innerHTML = "<img src='img/5.png' width='30px' height='30px'> GOOOD. continue FAST!";
 
-	document.getElementById("message").innerText += `\nCurrent Height: ${currentHeight}`;
+	document.getElementById("message2").innerHTML += `<BR> Current Height: ${currentHeight}`;
 
-	if (currentHeight > 400)
-		document.getElementById("message").innerText = `Congratulations, you made it!\nYou achieved a height of ${currentHeight} pixels! `;
+	if (currentHeight > 420)
+		document.getElementById("message2").innerHTML = "Congratulations, you made it!! <img src='img/5.png' width='30px' height='30px'>";
 }
 
 

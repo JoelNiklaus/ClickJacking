@@ -5,8 +5,8 @@ body {
 .container {
 	background: white;
 	position: relative;
-	width: 100%;
-	height: 56.25vw;
+	width: 50%;
+	height: 40.25vw;
 }
 .container div {
 	background: black;
@@ -117,21 +117,21 @@ body {
 }
 .container .hour {
 	border-radius: 1.04vw;
-	left: 3.65vw;
-	top: 1.56vw;
-	width: 1.56vw;
+	left: 2.1vw;
+	top: -0.2vw;
+	width: 1.2vw;
 	height: 3.65vw;
-	transform-origin: 0.78vw 2.86vw;
+	transform-origin: 0.55vw 2.95vw;
 	transform: rotate(135deg);
 	animation: hrHand 4s linear infinite;
 }
 .container .minute {
 	border-radius: 1.04vw;
-	left: 3.65vw;
-	top: 0.78vw;
-	width: 1.56vw;
-	height: 4.43vw;
-	transform-origin: 0.78vw 3.65vw;
+	left: 2.1vw;
+	top: -0.2vw;
+	width: 1.2vw;
+	height: 3.65vw;
+	transform-origin: 0.55vw 2.95vw;
 	animation: minHand 0.3333333333s linear infinite;
 }
 .container .pillow {

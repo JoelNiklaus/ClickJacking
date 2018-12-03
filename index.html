@@ -27,13 +27,15 @@
 <script>
 	function redirect() {
 		var nickname = document.getElementById('nickname').value;
+		var rn = Math.floor((Math.random() * 1000) + 1);
+		nickname = nickname+ rn;
 		if (nickname.length <= 3){
 			document.getElementById('nicknamehelp').innerHTML = "Please enter a nick name longer than 3 characters";
 			document.getElementById('nicknamehelp').classList.remove("text-muted");
 			document.getElementById('nicknamehelp').classList.add("text-danger");
 		}
 		else
-			window.location = "/html5/game.html?nickname=" + nickname;
+			window.location = "game.html?nickname=" + nickname;
 		return false;
 	}
 

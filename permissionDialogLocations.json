@@ -3,7 +3,7 @@
 	"Chrome": {
 	  "coordinates": {
 		"left": "380px",
-		"width": "65px",
+		"width": "35px",
 		"bottom": "75px",
 		"height": "30px"
 	  },
@@ -16,9 +16,9 @@
 	"Firefox": {
 	  "coordinates": {
 		"left": "440px",
-		"width": "180px",
-		"bottom": "105px",
-		"height": "40px"
+		"width": "150px",
+		"bottom": "113px",
+		"height": "25px"
 	  },
 	  "influence": {
 		"bookmarkBar": "Changes the position of the prompt more upwards.",
